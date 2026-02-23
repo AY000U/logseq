@@ -12,16 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install Logseq Publish
-        run: npm install -g @logseq/publish
-
-      - name: Build site
-        run: logseq-publish . --output ./www
+      - name: Build with Logseq Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/data \
+            ghcr.io/logseq/publish:latest \
+            --output /data/www
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
