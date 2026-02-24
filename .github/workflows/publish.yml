@@ -7,14 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: logseq/publish-spa@v0.3.0
+      
+      - name: Build Logseq
+        uses: logseq/publish-spa@v0.1.0
         with:
           graph-directory: .
           output-directory: www
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Add nojekyll
         run: touch www/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
