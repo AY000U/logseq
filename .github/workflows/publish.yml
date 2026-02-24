@@ -7,9 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Build Logseq
-        uses: logseq/publish-spa@v0.1.0
+
+      - name: Add public to all journals
+        run: |
+          for f in journals/*.md; do
+            if ! grep -q "^public:: true" "$f"; then
+              sed -i '1s/^/public:: true\n/' "$f"
+            fi
+          done
+
+      - uses: logseq/publish-spa@v0.1.0
         with:
           graph-directory: .
           output-directory: www
