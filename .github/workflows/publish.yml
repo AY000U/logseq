@@ -7,10 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: logseq/publish-spa@v0.3.0
+      - uses: logseq/publish-spa@main
         with:
-          graph-directory: .          # 你的图谱根目录
+          graph-directory: .
           output-directory: www
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Add nojekyll
         run: touch www/.nojekyll
       - name: Deploy to GitHub Pages
